@@ -45,8 +45,8 @@ After posting your paper the day before class, make sure to read, before class, 
 2. You should have some feasible experiment in mind to answer the research question.  Remember that the data must be collected in time to analyze for the final project.  Constraints may prevent you from conducting your ideal experiment, which can be fine, provided you produce a design that will allow you to evaluate your question.  
   1. You might not be able to change Amazon.com’s checkout process, but you may be able to convince a friend to experiment with the checkout process for their online small business.  
   2. You may not be able to get your employer to change how it compensates its employees, but you might be able to change the compensation of workers you hire on Mechanical Turk to do some task.  
-  3. Your experiment may end up becoming a first step in a larger research program, as you will likely learn something from the process of designing the experiment, and may generate new ideas that are worth trying later. 
-  4. Experiments conducted using Amazon's mechanical turk often are less satisfying an experience than an experiment that you conduct using other means. 
+3. Your experiment may end up becoming a first step in a larger research program, as you will likely learn something from the process of designing the experiment, and may generate new ideas that are worth trying later. 
+4. Experiments conducted using Amazon's mechanical turk often are less satisfying an experience than an experiment that you conduct using other means. 
 
 # Grading Rubric
 
