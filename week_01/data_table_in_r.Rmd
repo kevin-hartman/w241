@@ -164,7 +164,7 @@ dt[ , var(value)]
 ```
 But, other actions -- such as plotting a histogram, or running a regression, are also simply functions applied to columns. So these, too can work in the column space.
 
-``` 
+```{r}
 dt[ , hist(value)]
 dt[ , lm(value ~ type)]
 ```

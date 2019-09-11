@@ -55,7 +55,7 @@ your_age
 How old are the other people in the class? Write the slice that will pull this. 
 
 ```{r}
-
+class_population[you == 0, age]
 ```
 
 Here is *one* way that I could make a guess about how old you are -- pick one person at random from the class, and them their age, and make that my guess for your age. 
@@ -156,18 +156,20 @@ We can't *actually* see both the potential outcome to control and treatment for 
 Randomly sample 5 of the villages and take the average of their potential outcomes. How close does this come to the true mean of 15? 
 
 ```{r}
-control_mean <- '[replace with your code]'
+control_mean <- d[ , mean(sample(y_0, size = 5, replace = FALSE))]
+control_mean
 ```
 
 Randomly sample 2 village and take the average of their potential outcomes. How close does this come to the true mean of 20? 
 
 ```{r}
-treat_mean <- '[replace with your code]'
+treat_mean <- d[ , mean(sample(y_1, size = 2, replace = FALSE))]
+treat_mean
 ```
 
 Calculate the difference of these. How close does this come to the true treatment effect of 5? 
 ```{r}
-
+treat_mean-control_mean
 ```
 
 Note that because we've got pretty small sample sizes here -- 5 in control and 2 in treatment -- we might actually not get that close in any *particular* run of this experiment. But, across all the experiments that we *could* have conducted, we will be dead on.

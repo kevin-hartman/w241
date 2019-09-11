@@ -33,6 +33,9 @@ In the upper right of this editor, you can see the **Insert** button. This has o
 Go ahead an insert a chunk below, and include a call for a "Hello World String". 
 
 <!-- Insert Chunk Below Here -->
+```{r}
+print("Hellow World String")
+```
 
 
 

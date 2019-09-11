@@ -80,24 +80,25 @@ Some light practice
 
 ```{r}
 
+df[df$id %in% 1:10,]
 ```
 
 - How would you pull all of the odd ids? 
 
 ```{r}
-
+df[df$id %% 2 == 1, ]
 ```
 
 - How would you pull all of the odd ids, that are of type indicated by a vowel? (Hint: You can combine the statements with the logical operator `&` )
 
 ```{r}
-
+df[df$id %% 2 == 1 & df$type %in% c("A", "E"), ]
 ```
 
 - How would you pull the rows that *either* have an id that is in the set `1:2` **OR** have a type that is equal to `E`? (Hint: You can combine the statements ith the logical operator `|` which reads as inclusive OR)
 
 ```{r}
-
+df[df$id %in% 1:2 | df$type == "E", ]
 ```
 
 Here come the answers: 

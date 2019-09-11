@@ -24,14 +24,14 @@ Here are the column definitions:
 1. Assess whether the treatment _has an effect_. If so, what is that effect, on average? We'll give you the general structure of a solution, but you'll have to fill in the specifics. 
 
 ```{r}
-ATE <- d[ , .('group_mean' = ), keyby = .()] %>% 
-  .[ , .('ate' = diff())]
+ATE <- d[ , .('group_mean' = mean(Y)), keyby = .(Z)] %>% 
+  .[ , .('ate' = diff(group_mean))]
 ATE
 ```
 (Note that you could also accomplish the same thing without the "pipe" using chaining of operations in data.table 
 
 ```{r}
-d[ , .('group_mean' = ), keyby = .()][ , .('ate' = diff())]
+d[ , .('group_mean' = mean(Y)), keyby = .(Z)][ , .('ate' = diff(group_mean))]
 ``` 
 
 2. Assess, using randomization inference, whether this effect is a _surprising_ effect, or instead if this effect could just have arisen from randomization error. 
@@ -52,14 +52,62 @@ You can do it! There are ways that involve loops that are pretty easy to think a
 
 ```{r}
 
+po_control<- d[ Z==0, Y]
+po_treatment <- po_control
+
+est_ate <- function(outcome, treat) { 
+  mean(outcome[treat==1]) - mean(outcome[treat==0])
+} 
+
+randomize <- function(group) { 
+  sample(c(0,1), size = length(group), replace = TRUE)
+}
+
+treatment <- randomize(po_control)
+treatment
+outcomes <- po_treatment * treatment + po_control*(1-treatment)
+outcomes
+
+ate <- est_ate(outcomes, treatment) 
+ate 
+
+distribution_under_sharp_null <- replicate(5000, est_ate(outcomes, randomize(po_control)))
 ```
 
+```{r}
+
+plot(density(distribution_under_sharp_null,  na.rm=TRUE), 
+     main = "Density under Sharp Null")
+hist(distribution_under_sharp_null, 
+     main = "Histogram under Sharp Null")
+```
+```{r}
+par(mfrow = c(1,2))
+plot(density(distribution_under_sharp_null, na.rm=TRUE), 
+     main = "Density Plot of ATE")
+abline(v = ate, col = "blue")
+hist(distribution_under_sharp_null, 
+     main = "Histogram of ATE", 
+     freq = FALSE)
+abline(v = ate, col = "blue")
+```
+
+```{r}
+m <- mean(ate <= distribution_under_sharp_null) #p-value
+m
+``` 
 # Questions for understanding 
 
 1. Characterize the distribution of the sharp-null distribution of treatment effects. Talk about what, if anything, is notable about it, and what components of the data might be leading to any patterns that you note.
 
 ```{r}
-
+nsims <- 10000
+	sim.means <- as.numeric(NULL)
+	for(i in 1:nsims){
+	  d[, sim.treat := sample(c(rep(0,10), rep(1,10)))]
+	  sim.means[i] <- d[sim.treat == 1, mean(Y)] - d[sim.treat == 0, mean(Y)]
+	}
+	hist(sim.means)
 ```
 
 2. How many of the randomization inference loops are larger than the treatment effect that you calculated? How would you use this statement to construct a one-sided test, and an associated p-value? 

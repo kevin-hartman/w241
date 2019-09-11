@@ -240,7 +240,7 @@ A little more about the average p-values: What does the "average" p-value look l
 ```{r}
 mean(p_values) 
 mean(p_values < 0.05) # somewhat likely to detect this effect
-table(p_values < 0.05)
+table(p_values < 0.05) 
 ```
 
 Now, do it again, but with a simulated treatment effect size of twenty: $\tau_{i} = 20$ for everyone in the study. What then are the chances that we see an effect size as large as we do for a single randomization, just by chance? 
