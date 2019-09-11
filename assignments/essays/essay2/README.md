@@ -31,7 +31,8 @@ In your proposal, make sure to address:
 
 1. Does your experimental design involve clustering? If so, why? What clusters do you imagine? 
 2. Do you intend to do blocking? If so, how and why? 
-3. What statistical analysis do you intend to do once the data are collected? 4. If possible, describe how you might do a pilot study with a small number of subjects, early in the project.  A pilot can often help us avoid egregious mistakes that could spoil the experiment. What do you see as the greatest risks to the experiment? What might go wrong? 
+3. What statistical analysis do you intend to do once the data are collected? 
+4. If possible, describe how you might do a pilot study with a small number of subjects, early in the project.  A pilot can often help us avoid egregious mistakes that could spoil the experiment. What do you see as the greatest risks to the experiment? What might go wrong? 
 
 We expect 3-4 pages, single-spaced.  Please post your proposal to the Essay 2 forum on the ISVC for our course section, ideally with a link to a Google Doc that you may revise later.  Please use the title of your message as the subject line for your forum message.  
 
