@@ -7,12 +7,67 @@ output: html_notebook
 
 Let's look at the box that's reported in _Field Experiments_ box 3.7. This is a short table of "donations" to a political campaign, where some people have received one treatment message about donation, while other have received another message. 
 
+
+
 ```{r}
 library(data.table)
 library(magrittr)
 
 d <- fread('http://hdl.handle.net/10079/ghx3frr')
-head(d)
+d <- rbind(d,d,d)
+
+setkeyv(d, "Z")
+d[ , id := 1:.N]
+
+ate <- d[ , .(mean_shift = mean(Y)), keyby = .(Z)][ , diff(mean_shift)]
+ate
+
+d
+
+```
+
+
+```{r}
+library(data.table)
+library(magrittr)
+
+d <- fread('http://hdl.handle.net/10079/ghx3frr')
+
+d[, id:= 1:.N]
+#d[id %in% 17:19, Y:=200]
+
+d[Z==1, y_1:= Y]
+d[Z==0, y_0:= Y]
+
+
+ate <- d[ , .(mean_shift = mean(Y)), keyby = .(Z)][ , diff(mean_shift)]
+ate
+
+d[Z==1, y_0:= y_1]
+d[Z==0, y_1:= y_0]
+
+choose(20, 10)
+
+
+randomization_inference_loop <- function(cases=1:20, size=10, scope_big_fish = FALSE) {
+  if(scope_big_fish == FALSE) { 
+    treatment_id <- sample(cases, size, FALSE)
+    ri_ate <- d[id %in% treatment_id, mean(y_1)] - d[!(id %in% treatment_id), mean(y_0)]
+  } else if (scope_big_fish == TRUE) {
+    treatment_id <- sample(cases, size, FALSE)
+    ri_ate <- d[id %in% treatment_id & Y<499, mean(y_1)] - d[!(id %in% treatment_id), mean(y_0)]
+  }
+  return(ri_ate)
+}
+
+
+ri_distribution <- replicate(1000, expr=randomization_inference_loop(cases=1:20, size=10, scope_big_fish=FALSE))
+hist(ri_distribution, col = 'black', breaks = 20)
+abline(v = ate, col = "red", lwd = 4)
+
+d[ , t.test(Y ~ Z)]
+mean(ri_distribution > 70)
+
 ```
 Here are the column definitions: 
 
@@ -52,7 +107,7 @@ You can do it! There are ways that involve loops that are pretty easy to think a
 
 ```{r}
 
-po_control<- d[ Z==0, Y]
+po_control<- d[ , Y]
 po_treatment <- po_control
 
 est_ate <- function(outcome, treat) { 

@@ -9,7 +9,7 @@ The Tennessee STAR experiment is a shining example of a well run, well executed 
 # Download the data 
 
 # Load Packages and Set Options and Load Data 
-```{r, results='hide', message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, results='hide'}
 library(data.table)                     # for data manipulation 
 library(foreign)                        # to read spss file 
 library(sandwich)                       # for creating robust SEs 

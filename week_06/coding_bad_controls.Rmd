@@ -73,7 +73,7 @@ mod_both <- d[ , lm(x ~ D + epsilon)]
 ## I've commented this out so that you can uncomment it after you've answered the
 ## questions for understanding.
 ## 
-## stargazer(mod_d, mod_x, mod_both, type = 'text')
+stargazer(mod_d, mod_x, mod_both, type = 'text')
 ```
 
 ## Make Potential Outcomes 
@@ -121,7 +121,7 @@ subset_model <- d[x==1, lm(Y ~ D)]
 
 ```{r, results='asis'}
 stargazer(unconditional_model, bad_control_model, subset_model, 
-          type = 'latex', header = FALSE, table.placement = 'h', 
+          type = 'text', header = FALSE, table.placement = 'h', 
           add.lines = list(c("Data Subset", "All", "All", "$x==1$")))
 ```
 

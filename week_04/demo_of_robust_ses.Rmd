@@ -103,6 +103,22 @@ table(group, randomize_blocked())
 2. Does the restricted set of randomizations that we're realizing seem like "cheating"? Why or why not? 
 
 ```{r}
+sim_blocked_study <- function() {
+  po_control <- c(seq(from = 1, to = 20), seq(from = 51, to = 70))
+  po_treatment <- po_control
+  treatment <- randomize_blocked()
+  outcomes <- po_treatment * treatment + po_control * (1 - treatment)
+  ate <- est_ate(outcomes, treatment)
+  n_women_treatment <- table(group, treatment)[2, 2]
+  return(list(ate = ate, n_women_treatment = n_women_treatment))
+}
+results <- t(replicate(1000, sim_blocked_study()))
+source("http://ischool.berkeley.edu/~d.alex.hughes/code/pubPlot.R")
+plot(results, 
+     main = "ATE and women in Treatment Condition", 
+     xlab = "Average Treatment Effect", 
+     ylab = "Women in Treatment")
+abline(v = 0, col = "blue", lwd = 2)
 
 ```
 
