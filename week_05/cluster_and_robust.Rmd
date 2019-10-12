@@ -88,14 +88,15 @@ Robust standard errors are calculated using the `sandwich` package, and via the 
 ```{r}
 ## ? vcovHC
 m1$vcovHC_ <- vcovHC(m1)
+m1$homoskedastic <- vcovHC(m1, type='const')
 coeftest(m1, vcov. = m1$vcovHC_)
 ```
 
 ```{r, }
 stargazer(
-  m1, 
+  m1, m1,
   type = 'text',
-  se=list(sqrt(diag(m1$vcovHC_))), 
+  se=list(sqrt(diag(m1$homoskedastic)), sqrt(diag(m1$vcovHC_))), 
   header=F
   )
 ```
