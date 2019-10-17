@@ -40,20 +40,43 @@ Can you make back the table 5.2 from Green and Gerber using only the mean functi
 1. Estimate the ITT using means
 
 ```{r}
-ITT <- ''
+ITT <- d[, mean(VOTED), ASSIGNED]
+ITT
   
 ```
 
 2. What proportion of those ASSIGNED were actually treated? 
 
 ```{r}
-ITT_d <- ''
+ITT_d <- d[ASSIGNED==1, mean(VOTED), TREATED]
+ITT_d
 ```
 
 Can you use these two quantities to produce a CACE? 
 
+```{r}
+CACE <- ITT[ASSIGNED==1 , V1, ] / ITT_d[TREATED==1, V1]
+CACE
+```
+
 ## Second, let's do it using models
 
 1. Estiamte the ITT using a `lm` call. 
+```{r}
+ITT <- d[, lm(VOTED~ASSIGNED)]
+ITT
+  
+```
 2. Estiamte the ITT_d using a `lm` call. 
+```{r}
+ITT_d <- d[, lm(VOTED~TREATED)]
+ITT_d
+  
+```
 3. Divide these coefficients. 
+
+```{r}
+
+(ITT$coefficients[1] + ITT$coefficients[2]) / (ITT_d$coefficients[1] + ITT_d$coefficients[2])
+
+```
